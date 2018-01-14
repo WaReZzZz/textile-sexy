@@ -1,0 +1,25 @@
+{% extends "layout.twig"%}
+
+{% block title %}{% endblock %}
+
+{% block carousel %}
+
+    <div class="owl-carousel-list">
+        <div> <img src="/img/Home/Carousel/image01.jpg" alt="..."> </div>
+        <div> <img src="/img/Home/Carousel/image02.jpg" alt="..."> </div>
+        <div> <img src="/img/Home/Carousel/image03.jpg" alt="..."> </div>
+        <div> <img src="/img/Home/Carousel/image04.jpg" alt="..."> </div>
+        <div> <img src="/img/Home/Carousel/image05.jpg" alt="..."> </div>
+        <div> <img src="/img/Home/Carousel/image06.jpg" alt="..."> </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+<div class="row catalogue">
+    {% include 'catalogue_body.twig' %}
+<a class="nextPage hidden" href="/categorie/{{ page ~ '/' ~ (pageCount+1) }}">next</a>
+</div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

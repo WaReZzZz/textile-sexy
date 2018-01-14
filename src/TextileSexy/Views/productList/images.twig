@@ -1,0 +1,17 @@
+{% if item.LargeImage is defined and item.LargeImage.URL is defined %}
+    <img src="{{item.LargeImage.URL}}" data-small-image="{{item.SmallImage.URL}}" alt="Image produit">
+{% elseif item.ImageSets is defined and item.ImageSets.ImageSet.LargeImage is defined  %}
+    <img src="{{item.ImageSets.ImageSet.LargeImage.URL}}" data-small-image="{{item.ImageSets.ImageSet.SmallImage.URL}}" alt="Image produit">
+{% elseif item.ImageSets is defined and item.ImageSets.ImageSet[0].LargeImage %}
+    <img src="{{item.ImageSets.ImageSet[0].LargeImage.URL}}" data-small-image="{{item.ImageSets.ImageSet[0].SmallImage.URL}}" alt="Image produit">
+{% elseif item.Variations.Item[0].LargeImage is defined %}
+    <img src="{{item.Variations.Item[0].LargeImage.URL}}" data-small-image="{{item.Variations.Item[0].SmallImage.URL}}" alt="Image produit">
+{% elseif item.Variations.Item.LargeImage is defined %}
+    <img src="{{item.Variations.Item.LargeImage.URL}}" data-small-image="{{item.Variations.Item.SmallImage.URL}}" alt="Image produit">
+{% elseif item.Variations.Item.ImageSets.ImageSet[0].LargeImage is defined %}
+    <img src="{{item.Variations.Item.ImageSets.ImageSet[0].LargeImage.URL}}" data-small-image="{{item.Variations.Item.ImageSets.ImageSet[0].SmallImage.URL}}" alt="Image produit">
+{% elseif item.Variations.Item[0].ImageSets.ImageSet.LargeImage is defined %}
+    <img src="{{item.Variations.Item[0].ImageSets.ImageSet.LargeImage.URL}}" data-small-image="{{item.Variations.Item[0].ImageSets.ImageSet.SmallImage.URL}}" alt="Image produit">
+{% else %}
+    <img src="/img/aucune.png" alt="no image">
+{% endif %}

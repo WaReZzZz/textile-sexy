@@ -1,0 +1,8 @@
+cache/twig/
+Seositecheckup_Analysis_Report_2016_01_20_07_24_53.pdf
+php-cs-fixer.phar
+vendor/symfony/routing/Tests/
+vendor/monolog/monolog/tests/
+.idea/
+vendor/
+.env

@@ -1,0 +1,39 @@
+{% extends "layout.twig"%}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <div class="col-md-6">
+        {% include 'product/images.twig' %}
+    </div>
+
+    <!-- Title -->
+    <div class="col-md-6">
+        <h3 class="h3">Description</h3>
+        {% include 'product/buyButton.twig' %}
+        <p class="label-info price text-right h2">
+            {% include 'product/price.twig' %}
+        </p>
+        <h3 class="productTitle">
+            {% include 'product/brand.twig' %}
+        </h3>
+        <p>
+            {% include 'product/title.twig' %}
+        </p>
+        {% include 'product/description.twig' %}
+        <p>
+            {% if item.EditorialReviews.EditorialReview.Content is defined %}
+                {{item.EditorialReviews.EditorialReview.Content|raw}}
+            {% endif %}
+        </p>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('[name="variations"]').on('change', function () {
+            window.location.href = '/produit/' + $(this).val() + '/';
+        });
+    </script>
+{% endblock %}

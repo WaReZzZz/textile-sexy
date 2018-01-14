@@ -1,0 +1,41 @@
+<!-- Wrapper for slides -->
+{# dump(item) #}
+<div id="owl-carousel-product" class="owl-carousel">
+    {% if item.ImageSets.ImageSet is defined %}
+        {% if item.ImageSets.ImageSet is iterable %}
+            {% for image in item.ImageSets.ImageSet %}
+                {% if image.LargeImage is defined %}
+                    <div class="item">
+                        <img src="{{image.LargeImage.URL}}" {% if loop.first %}data-small-image="{{item.ImageSets.ImageSet.SmallImage.URL}}"{% endif %} alt="Image produit">
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% elseif item.ImageSets.ImageSet.LargeImage is defined %}test 2
+            <div>
+                <img src="{{item.ImageSets.ImageSet.LargeImage.URL}}" data-small-image="{{item.ImageSets.ImageSet.SmallImage.URL}}" alt="Image produit">
+            </div>
+        {% else %}test 3
+            {% for image in item.ImageSets.ImageSet %}
+                {% if image.LargeImage is defined %}
+                    <div>
+                        <img src="{{image.LargeImage.URL}}" {% if loop.first %}data-small-image="{{item.ImageSets.ImageSet[0].SmallImage.URL}}"{% endif %} alt="Image produit">
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% elseif item.LargeImage is defined %}test 4
+        <div>
+            <img src="{{item.LargeImage.URL}}" alt="...">
+        </div>
+    {% elseif item.Variations.Item.ImageSets.ImageSet is defined %}
+        {% for image in item.Variations.Item.ImageSets.ImageSet %}
+            {% if image.LargeImage is defined %}
+                <div class="item">
+                    <img src="{{image.LargeImage.URL}}" {% if loop.first %}data-small-image="{{image.SmallImage.URL}}"{% endif %} alt="Image produit">
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <img src="/img/aucune.png" alt="no image">
+    {% endif %}
+</div>

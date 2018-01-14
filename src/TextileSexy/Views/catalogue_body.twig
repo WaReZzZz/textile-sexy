@@ -1,0 +1,30 @@
+<!-- Page Features -->
+{% for item in items %}
+    {% if item.OfferSummary.TotalNew is defined and item.OfferSummary.TotalNew >= 1 or item.Variations is defined %}{# only available #}
+        <div class="col-md-3 col-sm-6 hero-feature  col-xs-12">
+            <div class="thumbnail" style="height: 368px">
+                {% include 'productList/images.twig' %}
+                <div class="caption">
+                    {% include 'productList/brand.twig' %}
+                    <p>
+                        {% include 'productList/title.twig' %}
+                    </p>
+                    <p class="label-info price">
+                        {% include 'productList/price.twig' %}
+                    </p>
+                    {% include 'productList/description.twig' %}
+                    <br>
+                    <p>
+                        {% if item.DetailPageURL is defined %}<a href="{{item.DetailPageURL}}" class="btn btn-default">Description</a>{% endif %}
+                        {% include 'productList/buyButton.twig' %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        {# dump(item) #}
+        <!--pas d'offre associÃ© a ce produit ou sous-produit-->
+    {% endif %}
+{% endfor %}
+<!-- /.row -->
+<a class="nextPage hidden" href="/categorie/{{ page ~ '/' ~ (pageCount+1) }}">next</a>

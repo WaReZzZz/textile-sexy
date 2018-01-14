@@ -1,0 +1,16 @@
+{% if item.ItemAttributes.Brand is defined %}    
+    <h3 class="productTitle">
+        {{item.ItemAttributes.Brand}}
+    </h3>
+{% elseif item.Variations.Item is defined and item.Variations.Item.ItemAttributes is defined %}
+    <h3 class="productTitle">
+        {{ item.Variations.Item.ItemAttributes.Brand }}
+    </h3>
+{% elseif item.Variations.Item is defined and item.Variations.Item[0] is defined %}
+    <h3 class="productTitle">
+        {{ item.Variations.Item[0].ItemAttributes.Brand }}
+    </h3>
+{% else %}
+    <br>
+    {# Unknown brand #}
+{% endif %}

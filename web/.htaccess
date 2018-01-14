@@ -1,0 +1,21 @@
+# Redirect incoming URLs to index.php
+<IfModule mod_rewrite.c>
+    Options -MultiViews
+
+    RewriteEngine On
+    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
+<IfModule mod_expires.c>
+    ExpiresActive on
+ 
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+</IfModule>
+#AuthUserFile "/kunden/homepages/41/d571662545/htdocs/crm/web/.htpasswd"
+#AuthName "L'accès à ce répertoire est sécurisé."
+#AuthType Basic
+#Require valid-user

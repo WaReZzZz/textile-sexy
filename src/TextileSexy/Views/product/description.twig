@@ -1,0 +1,30 @@
+{% if item.Variations.Item is defined %}
+    <select name="variations" class="form-control">
+        <option value="{{item.ParentASIN}}">Choisissez votre taille ou/et couleur</option>
+        {% for itemVariation in item.Variations.Item %}
+            {% for variation in itemVariation.VariationAttributes %}
+                {% if  variation.Value is defined and variation.Name is defined and variation.Name == 'Size' %}
+                    <option class="label-info" value="{{itemVariation.ASIN}}">{{variation.Value}}</option>
+                {% elseif  variation.Value is defined %}
+                    <option class="label-info" value="{{itemVariation.ASIN}}">{{variation.Value}}</option>
+                {% elseif  variation.Size is defined %}
+                    <option class="label-info" value="{{itemVariation.ASIN}}">{{variation.Size}}</option>
+                {% elseif variation is not iterable %}
+                    <option class="label-info" value="{{itemVariation.ASIN}}">{{ variation}}</option>
+                {% elseif variation is iterable %}
+                    <option class="label-info" value="{{itemVariation.ASIN}}">
+                    {% for multipleVariations in variation %}
+                        {{multipleVariations.Value}}
+                    {% endfor %}</option>
+                {% else %}
+                    {# dump(variation) #}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </select>
+{% else %}
+    Taille/couleur unique.
+{% endif %}
+
+
+

@@ -1,0 +1,10 @@
+{% if item.ItemAttributes is defined %}
+    {{item.ItemAttributes.Title| truncate(250)}}
+{% elseif item.Variations.Item is defined and item.Variations.Item.ItemAttributes is defined %}
+    {{ item.Variations.Item.ItemAttributes.Title| truncate(250) }}
+{% elseif item.Variations.Item is defined and item.Variations.Item[0] is defined %}
+    {{ item.Variations.Item[0].ItemAttributes.Title| truncate(250) }}
+{% elseif item.Offers.Offer is defined %}
+    {# No title #}
+    <br>
+{% endif %}

@@ -1,0 +1,42 @@
+{% extends "layout.twig"%}
+
+{% block title %}{% endblock %}
+
+{% block css %}
+    <style>
+        .thumbnail {
+            padding: 0px;
+            border: 0px;
+            margin-top: 10px;
+        }
+        .owl-carousel-list div h1{
+            position:absolute;
+            color:#000000;
+            display:block;
+            z-index: 2;
+        }
+        h1 {
+            padding: 10px 10px 10px 10px;
+        }
+    </style>
+{% endblock %}
+{% block carousel %}
+    <div class="container">
+        <div class="owl-carousel-list">
+            <a href="{{path('categorie', {page: 'soutiens-gorge'})}}"><h1>Soutiens-gorge</h1><img src="/img/Home/Carousel/image01.jpg" alt="Image 1"> </a>
+            <a href="{{path('categorie', {page: 'culottes'})}}"><h1>Culottes</h1><img src="/img/Home/Carousel/image02.jpg" alt="Image 2"> </a>
+            <a href="{{path('categorie', {page: 'ensembles'})}}"><h1>Ensembles</h1><img src="/img/Home/Carousel/image03.jpg" alt="Image 3"> </a>
+            <a href="{{path('categorie', {page: 'bodys'})}}"><h1>Bodys</h1><img src="/img/Home/Carousel/image04.jpg" alt="Image 4"> </a>
+            <a href="{{path('categorie', {page: 'nuisettes'})}}"><h1>Nuisettes</h1><img src="/img/Home/Carousel/image06.jpg" alt="Image 5"> </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <div class="thumbnail"> <img src="/img/Home/Carousel/image05.jpg" alt="Image 5"> </div>
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

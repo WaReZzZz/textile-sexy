@@ -1,0 +1,8 @@
+{% if item.ItemAttributes.Brand is defined %}
+    {{item.ItemAttributes.Brand}}
+{% elseif item.Variations.Item is defined and item.Variations.Item.ItemAttributes is defined %}
+    {{ item.Variations.Item.ItemAttributes.Brand }}
+{% elseif item.Variations.Item is defined and item.Variations.Item[0] is defined %}
+    {{ item.Variations.Item[0].ItemAttributes.Brand }}
+{% else %}
+{% endif %}

@@ -1,0 +1,5 @@
+{% if item.Variations is not defined and item.ItemAttributes.Title is defined %}
+    <button type="button" class="btn btn-primary buy" data-name="{{item.ItemAttributes.Title}}" data-asin="{{item.ASIN}}" >Acheter</button>
+{% elseif item.Variations is not defined %}
+    <button type="button" class="btn btn-primary buy" data-name="Non comuniqué" data-asin="{{item.ASIN}}" >Acheter</button>
+{% endif %}

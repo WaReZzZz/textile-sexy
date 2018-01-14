@@ -1,0 +1,34 @@
+{% if item.Offers.Offer.OfferListing.SalePrice.FormattedPrice is defined %}
+    <span class="amount hidden">{{item.Offers.Offer.OfferListing.SalePrice.Amount}}</span>
+    {{(item.Offers.Offer.OfferListing.SalePrice.Amount/100)|number_format(2, ',', ' ')}} €
+{% elseif item.Offers is defined and item.Offers.Offer is defined %}
+    <span class="amount hidden">{{item.Offers.Offer.OfferListing.Price.Amount}}</span>
+    {{(item.Offers.Offer.OfferListing.Price.Amount/100)|number_format(2, ',', ' ')}} €
+{% elseif item.OfferSummary is defined and item.OfferSummary.LowestNewPrice is defined %}
+    <span class="amount hidden">{{item.OfferSummary.LowestNewPrice.Amount}}</span>
+    {{(item.OfferSummary.LowestNewPrice.Amount/100)|number_format(2, ',', ' ')}} €
+{% elseif item.Variations is defined and item.Variations.Item.Offers is defined %}
+    {% set minPrice = item.Variations.Item.Offers.Offer.OfferListing.Price.Amount %}
+    {% set maxPrice = item.Variations.Item.Offers.Offer.OfferListing.Price.Amount %}
+    {% for variation in item.Variations.Item %}
+        {% if variation.Offers is defined and minPrice|number_format > variation.Offers.Offer.OfferListing.Price.Amount|number_format %}
+            {% set minPrice = variation.Offers.Offer.OfferListing.Price.Amount %}
+        {% endif %}
+        {% if variation.Offers is defined and maxPrice|number_format < variation.Offers.Offer.OfferListing.Price.Amount|number_format %}
+            {% set maxPrice = variation.Offers.Offer.OfferListing.Price.Amount %}
+        {% endif %}
+    {% endfor %}    
+    {% if minPrice == maxPrice %}
+    <span class="amount hidden">{{minPrice}}</span>
+    {{(minPrice/100)|number_format(2, ',', ' ')}} €
+    {% else %}
+    à partir de {{(minPrice/100)|number_format(2, ',', ' ')}} €
+    jusqu'a {{(maxPrice/100)|number_format(2, ',', ' ')}} €
+    {% endif %}
+{% elseif item.Variations is defined and item.Variations.Item.Offers is defined %}
+    {% set minPrice = item.Variations.Item.Offers.Offer.OfferListing.Price.Amount %}
+    <span class="amount hidden">{{item.Variations.Item.Offers.Offer.OfferListing.Price.Amount}}</span>
+    {{(minPrice/100)|number_format(2, ',', ' ')}} €
+{% else %}
+    line 66 : {# dump(item) #}
+{% endif %}
