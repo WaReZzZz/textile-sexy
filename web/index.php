@@ -41,18 +41,6 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     ),
 ));
 
-$app->register(new Silex\Provider\SwiftmailerServiceProvider(), array(
-    'swiftmailer.options' => array(
-        'host' => getenv('MAIL_HOST'),
-        'port' => getenv('MAIL_PORT'),
-        'username' => getenv('MAIL_USERNAME'),
-        'password' => getenv('MAIL_PASSWORD'),
-        'encryption' => getenv('MAIL_ENCRYPTION'),
-        'auth_mode' => null,
-    )
-));
-$app['mailer'] = new \Swift_MailTransport;
-
 //$app['autoloader']->registerNamespace('TextileSexy\Controller', __DIR__.'/../lib');
 //$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
@@ -73,13 +61,6 @@ $app->register(new Silex\Provider\HttpCacheServiceProvider(), array(
     'http_cache.cache_dir' => __DIR__ . '/../cache/',
 ));
 
-$app->error(function (\Exception $e, Symfony\Component\HttpFoundation\Request $request, $code) use ($app) {
-    $message = \Swift_Message::newInstance('Error on Textile.sexy', $request . 'Exception : ' . $e)
-        ->setFrom('contact@textile.sexy', 'Textile Sexy')
-        ->setTo(array(getenv('MAIL_RECEPIENT')));
-    $app['mailer']->send($message);
-    return 'Error on this page the Webmaster has been warned';
-});
 $app->mount('/static', new \TextileSexy\Controllers\StaticControllerProvider());
 $app->mount('/produit', new \TextileSexy\Controllers\ArticleControllerProvider());
 $app->mount('/', new \TextileSexy\Controllers\HomeControllerProvider());

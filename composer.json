@@ -34,7 +34,7 @@
     },
     "scripts": {
         "cs-check": "phpcs",
-        "cs-fix": "phpcbf",
+        "cs-fix": "phpcbf --standard=PSR2",
         "serve": "php -S 0.0.0.0:8000 -t web"
     },
     "authors": [

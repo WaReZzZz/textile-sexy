@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -32,7 +32,8 @@ $(document).on('click', '.buy', function () {
     addRemoveItem($(this).data('asin'), 1, price, image, itemName);
 });
 
-function addRemoveItem(asin, quantity, amount, image, name) {
+function addRemoveItem(asin, quantity, amount, image, name)
+{
     $.ajax({
         url: '/createCart',
         data: {id: asin, quantity: quantity, price: amount, image: image, name: name},
@@ -157,17 +158,20 @@ $(document).ready(function () {
 
 });
 
-function slideProductDetails() {
+function slideProductDetails()
+{
     $('.thumbnail').hover(
-            function () {
+        function () {
                 $(this).find('.caption').slideDown(250); //.fadeIn(250)
-            },
-            function () {
+        },
+        function () {
                 $(this).find('.caption').slideUp(250); //.fadeOut(205)
-            }
+        }
     );
 }
 
-function call() {
+function call()
+{
     slideProductDetails();
 }
+

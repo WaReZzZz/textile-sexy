@@ -6,7 +6,6 @@ use ApaiIO\Operations\CartCreate;
 
 /**
  * A cart Modify operation
- *
  */
 class CartModify extends CartCreate
 {
@@ -63,8 +62,8 @@ class CartModify extends CartCreate
     /**
      * Adds an item to the Cart
      *
-     * @param string  $cartItemId   The ASIN or OfferListingId Number of the item
-     * @param integer $quantity How much you want to add
+     * @param string  $cartItemId The ASIN or OfferListingId Number of the item
+     * @param integer $quantity   How much you want to add
      */
     public function removeItem($cartItemId, $quantity)
     {
