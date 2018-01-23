@@ -2,6 +2,17 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Dotenv\Dotenv;
+
+if (class_exists(Dotenv::class)) {
+    // Load environment variables
+    try {
+        $dotenv = new Dotenv(__DIR__ . '/../');
+        $dotenv->overload();
+    } catch (\Exception $e) {
+    }
+}
+
 $client = new Raven_Client(getenv('SENTRY_DSN'));
 $error_handler = new Raven_ErrorHandler($client);
 $error_handler->registerExceptionHandler();
@@ -10,13 +21,7 @@ $error_handler->registerShutdownFunction();
 
 $app = new Silex\Application();
 
-try {
-    (new Dotenv\Dotenv(__DIR__.'/../'))->load();
-} catch (Dotenv\Exception\InvalidPathException $e) {
-    //
-}
-
-if (null !== getenv('APPLICATION_ENV') && getenv('APPLICATION_ENV') === 'development') {
+if (getenv('APPLICATION_ENV') === 'development') {
     $app['debug'] = true;
 } else {
     $app['debug'] = false;
@@ -40,6 +45,9 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
         'charset' => 'utf8',
     ),
 ));
+
+$app->register(new Silex\Provider\DoctrineServiceProvider(), array(
+    'orm.proxies_dir' => __DIR__ . '/../var/doctrine/proxies'));
 
 //$app['autoloader']->registerNamespace('TextileSexy\Controller', __DIR__.'/../lib');
 //$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
