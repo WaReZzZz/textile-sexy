@@ -46,12 +46,6 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     ),
 ));
 
-$app->register(new Silex\Provider\DoctrineServiceProvider(), array(
-    'orm.proxies_dir' => __DIR__ . '/../var/doctrine/proxies'));
-
-//$app['autoloader']->registerNamespace('TextileSexy\Controller', __DIR__.'/../lib');
-//$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
-
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__ . '/../src/TextileSexy/Views',
     'twig.options' => array(
