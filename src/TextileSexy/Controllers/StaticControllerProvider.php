@@ -2,13 +2,13 @@
 
 namespace TextileSexy\Controllers;
 
-use Silex\Application;
 use Silex\Api\ControllerProviderInterface;
+use Silex\Application;
 
 class StaticControllerProvider implements ControllerProviderInterface
 {
     use \TextileSexy\Services\UtilsTraits;
-    
+
     public function connect(Application $app)
     {
         // creates a new controller based on the default route

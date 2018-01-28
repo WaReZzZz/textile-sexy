@@ -2,14 +2,14 @@
 
 namespace TextileSexy\Controllers;
 
-use Silex\Application;
-use Silex\Api\ControllerProviderInterface;
-use Symfony\Component\HttpFoundation\Request;
 use ApaiIO\ApaiIO;
 use ApaiIO\Configuration\GenericConfiguration;
-use ApaiIO\Operations\Search;
-use ApaiIO\Operations\CartCreate;
 use ApaiIO\Operations\CartAdd;
+use ApaiIO\Operations\CartCreate;
+use ApaiIO\Operations\Search;
+use Silex\Api\ControllerProviderInterface;
+use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
 
 class HomeControllerProvider implements ControllerProviderInterface
 {
@@ -28,7 +28,8 @@ class HomeControllerProvider implements ControllerProviderInterface
                     array(
                         'basket' => $app['session']->get('basket'),
                         'countItems' => $this->countItemsFromBasket($app),
-                    'basketURL' => $app['session']->get('cart')['basketURL'])
+                        'basketURL' => $app['session']->get('cart')['basketURL']
+                    )
                 );
             }
         )->bind('homepage');
@@ -43,17 +44,13 @@ class HomeControllerProvider implements ControllerProviderInterface
                 if (!$app['debug']) {
                     $request->setScheme('https');
                 }
-                try {
-                    $conf
-                        ->setCountry('fr')
-                        ->setAccessKey(getenv('AWS_API_KEY'))
-                        ->setSecretKey(getenv('AWS_API_SECRET_KEY'))
-                        ->setAssociateTag(getenv('AWS_ASSOCIATE_TAG'))
-                        ->setResponseTransformer(new \ApaiIO\ResponseTransformer\XmlToSimpleXmlObject())
-                        ->setRequest($request);
-                } catch (\Exception $e) {
-                    echo $e->getMessage();
-                }
+                $conf
+                    ->setCountry('fr')
+                    ->setAccessKey(getenv('AWS_API_KEY'))
+                    ->setSecretKey(getenv('AWS_API_SECRET_KEY'))
+                    ->setAssociateTag(getenv('AWS_ASSOCIATE_TAG'))
+                    ->setResponseTransformer(new \ApaiIO\ResponseTransformer\XmlToSimpleXmlObject())
+                    ->setRequest($request);
                 $apaiIO = new ApaiIO($conf);
 
                 $search = new Search();
@@ -82,7 +79,8 @@ class HomeControllerProvider implements ControllerProviderInterface
                             'pageCount' => $pageCount,
                             'basket' => $app['session']->get('basket'),
                             'countItems' => $this->countItemsFromBasket($app),
-                        'basketURL' => $app['session']->get('cart')['basketURL'])
+                            'basketURL' => $app['session']->get('cart')['basketURL']
+                        )
                     );
                 } else {
                     return $app['twig']->render(
@@ -93,7 +91,8 @@ class HomeControllerProvider implements ControllerProviderInterface
                             'pageCount' => $pageCount,
                             'basket' => $app['session']->get('basket'),
                             'countItems' => $this->countItemsFromBasket($app),
-                        'basketURL' => $app['session']->get('cart')['basketURL'])
+                            'basketURL' => $app['session']->get('cart')['basketURL']
+                        )
                     );
                 }
             }
@@ -108,26 +107,22 @@ class HomeControllerProvider implements ControllerProviderInterface
                 if (!$app['debug']) {
                     $request->setScheme('https');
                 }
-                try {
-                    $conf
-                        ->setCountry('fr')
-                        ->setAccessKey(getenv('AWS_API_KEY'))
-                        ->setSecretKey(getenv('AWS_API_SECRET_KEY'))
-                        ->setAssociateTag(getenv('AWS_ASSOCIATE_TAG'))
-                        ->setRequest($ClientRequest)
-                        ->setResponseTransformer(new \ApaiIO\ResponseTransformer\XmlToSimpleXmlObject());
-                } catch (\Exception $e) {
-                    echo $e->getMessage();
-                }
+                $conf
+                    ->setCountry('fr')
+                    ->setAccessKey(getenv('AWS_API_KEY'))
+                    ->setSecretKey(getenv('AWS_API_SECRET_KEY'))
+                    ->setAssociateTag(getenv('AWS_ASSOCIATE_TAG'))
+                    ->setRequest($ClientRequest)
+                    ->setResponseTransformer(new \ApaiIO\ResponseTransformer\XmlToSimpleXmlObject());
                 $apaiIO = new ApaiIO($conf);
 
 
                 $post = array(
-                'asin' => $request->request->get('id'),
-                'quantity' => $request->request->get('quantity'),
-                'image' => $request->request->get('image'),
-                'price' => $request->request->get('price'),
-                'name' => $request->request->get('name')
+                    'asin' => $request->request->get('id'),
+                    'quantity' => $request->request->get('quantity'),
+                    'image' => $request->request->get('image'),
+                    'price' => $request->request->get('price'),
+                    'name' => $request->request->get('name')
                 );
 
                 $sCartItemId = $this->addBasket($post, $app);
@@ -145,9 +140,9 @@ class HomeControllerProvider implements ControllerProviderInterface
                     $app['session']->set(
                         'cart',
                         array(
-                        'CartId' => (string) $response->Cart->CartId,
-                        'HMAC' => (string) $response->Cart->HMAC,
-                        'basketURL' => (string) $response->Cart->PurchaseURL
+                            'CartId' => (string)$response->Cart->CartId,
+                            'HMAC' => (string)$response->Cart->HMAC,
+                            'basketURL' => (string)$response->Cart->PurchaseURL
                         )
                     );
                     $app['session']->set(
@@ -155,53 +150,21 @@ class HomeControllerProvider implements ControllerProviderInterface
                         array_merge_recursive(
                             $aBasket,
                             array(
-                            $post['asin'] => array(
-                            'CartItemId' => (string) $response->Cart->CartItems->CartItem->CartItemId
-                            )
+                                $post['asin'] => array(
+                                    'CartItemId' => (string)$response->Cart->CartItems->CartItem->CartItemId
+                                )
                             )
                         )
                     );
-                    return $app->json(array('amazonCart' => $response, 'basket' => $app['session']->get('basket')), 201);
+                    return $app->json(array('amazonCart' => $response, 'basket' => $app['session']->get('basket')),
+                        201);
                 }
                 return $app->json(array('amazonCart' => $response, 'basket' => $app['session']->get('basket')), 404);
             }
         )->bind('createCart');
 
 
-
         return $controllers;
-    }
-
-    private function addCart(ApaiIO $apaiIO, $app, $post, $sCartItemId = null)
-    {
-        $cart = $app['session']->get('cart');
-        if ($post['quantity'] > 0) {
-            $oldBasket = $app['session']->get('basket');
-            $cartAdd = new CartAdd();
-            $cartAdd->setCartId($cart['CartId']);
-            $cartAdd->setHMAC($cart['HMAC']);
-            $cartAdd->addItem($post['asin'], $post['quantity']);
-            $formattedResponse = $apaiIO->runOperation($cartAdd);
-            $app['session']->set(
-                'basket',
-                array_merge_recursive(
-                    $oldBasket,
-                    array(
-                    $post['asin'] => array(
-                    'CartItemId' => (string) $formattedResponse->Cart->CartItems->CartItem->CartItemId
-                    )
-                    )
-                )
-            );
-            return $formattedResponse;
-        } else {
-            $cartRemove = new \TextileSexy\Model\CartModify();
-            $cartRemove->setCartId($cart['CartId']);
-            $cartRemove->setHMAC($cart['HMAC']);
-            $cartRemove->removeItem($sCartItemId, intval($post['quantity']));
-            $formattedResponse = $apaiIO->runOperation($cartRemove);
-            return $formattedResponse;
-        }
     }
 
     /**
@@ -222,12 +185,12 @@ class HomeControllerProvider implements ControllerProviderInterface
                 array_merge(
                     $oldBasket,
                     array(
-                    $post['asin'] => array(
-                    'name' => (string) $post['name'],
-                    'image' => (string) $post['image'],
-                    'quantity' => (string) $post['quantity'],
-                    'price' => (string) $post['price'],
-                    )
+                        $post['asin'] => array(
+                            'name' => (string)$post['name'],
+                            'image' => (string)$post['image'],
+                            'quantity' => (string)$post['quantity'],
+                            'price' => (string)$post['price'],
+                        )
                     )
                 )
             );
@@ -238,6 +201,38 @@ class HomeControllerProvider implements ControllerProviderInterface
             $app['session']->remove('basket');
             $app['session']->set('basket', $aBasket);
             return $sCartItemId;
+        }
+    }
+
+    private function addCart(ApaiIO $apaiIO, $app, $post, $sCartItemId = null)
+    {
+        $cart = $app['session']->get('cart');
+        if ($post['quantity'] > 0) {
+            $oldBasket = $app['session']->get('basket');
+            $cartAdd = new CartAdd();
+            $cartAdd->setCartId($cart['CartId']);
+            $cartAdd->setHMAC($cart['HMAC']);
+            $cartAdd->addItem($post['asin'], $post['quantity']);
+            $formattedResponse = $apaiIO->runOperation($cartAdd);
+            $app['session']->set(
+                'basket',
+                array_merge_recursive(
+                    $oldBasket,
+                    array(
+                        $post['asin'] => array(
+                            'CartItemId' => (string)$formattedResponse->Cart->CartItems->CartItem->CartItemId
+                        )
+                    )
+                )
+            );
+            return $formattedResponse;
+        } else {
+            $cartRemove = new \TextileSexy\Model\CartModify();
+            $cartRemove->setCartId($cart['CartId']);
+            $cartRemove->setHMAC($cart['HMAC']);
+            $cartRemove->removeItem($sCartItemId, intval($post['quantity']));
+            $formattedResponse = $apaiIO->runOperation($cartRemove);
+            return $formattedResponse;
         }
     }
 }

@@ -2,11 +2,11 @@
 
 namespace TextileSexy\Controllers;
 
-use Silex\Application;
-use Silex\Api\ControllerProviderInterface;
 use ApaiIO\ApaiIO;
 use ApaiIO\Configuration\GenericConfiguration;
 use ApaiIO\Operations\Lookup;
+use Silex\Api\ControllerProviderInterface;
+use Silex\Application;
 
 class ArticleControllerProvider implements ControllerProviderInterface
 {
@@ -27,17 +27,13 @@ class ArticleControllerProvider implements ControllerProviderInterface
                 if (!$app['debug']) {
                     $request->setScheme('https');
                 }
-                try {
-                    $conf
-                        ->setCountry('fr')
-                        ->setAccessKey(getenv('AWS_API_KEY'))
-                        ->setSecretKey(getenv('AWS_API_SECRET_KEY'))
-                        ->setAssociateTag(getenv('AWS_ASSOCIATE_TAG'))
-                        ->setResponseTransformer(new \ApaiIO\ResponseTransformer\XmlToSimpleXmlObject())
-                        ->setRequest($request);
-                } catch (\Exception $e) {
-                    echo $e->getMessage();
-                }
+                $conf
+                    ->setCountry('fr')
+                    ->setAccessKey(getenv('AWS_API_KEY'))
+                    ->setSecretKey(getenv('AWS_API_SECRET_KEY'))
+                    ->setAssociateTag(getenv('AWS_ASSOCIATE_TAG'))
+                    ->setResponseTransformer(new \ApaiIO\ResponseTransformer\XmlToSimpleXmlObject())
+                    ->setRequest($request);
                 $apaiIO = new ApaiIO($conf);
 
                 $lookup = new Lookup();
@@ -51,7 +47,8 @@ class ArticleControllerProvider implements ControllerProviderInterface
                         'item' => $response->Items->Item,
                         'basket' => $app['session']->get('basket'),
                         'countItems' => $this->countItemsFromBasket($app),
-                    'basketURL' => $app['session']->get('cart')['basketURL'])
+                        'basketURL' => $app['session']->get('cart')['basketURL']
+                    )
                 );
             }
         )->bind('ensembles');
