@@ -104,9 +104,9 @@ class HomeControllerProvider implements ControllerProviderInterface
                 $conf = new GenericConfiguration();
                 $client = new \GuzzleHttp\Client();
                 $ClientRequest = new \ApaiIO\Request\GuzzleRequest($client);
-                if (!$app['debug']) {
+                /*if (!$app['debug']) {
                     $request->setScheme('https');
-                }
+                }*/
                 $conf
                     ->setCountry('fr')
                     ->setAccessKey(getenv('AWS_API_KEY'))
