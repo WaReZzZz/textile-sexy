@@ -49,7 +49,7 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__ . '/../src/TextileSexy/Views',
     'twig.options' => array(
-        'cache' => (!$app['debug']) ? __DIR__ . '/../cache/twig' : false,
+        //'cache' => (!$app['debug']) ? __DIR__ . '/../cache/twig' : false,
     )
 ));
 $app['pages'] = include_once __DIR__ . '/../src/TextileSexy/Config/pages.global.php';

@@ -32,8 +32,7 @@ $(document).on('click', '.buy', function () {
     addRemoveItem($(this).data('asin'), 1, price, image, itemName);
 });
 
-function addRemoveItem(asin, quantity, amount, image, name)
-{
+function addRemoveItem(asin, quantity, amount, image, name) {
     $.ajax({
         url: '/createCart',
         data: {id: asin, quantity: quantity, price: amount, image: image, name: name},
@@ -48,28 +47,28 @@ function addRemoveItem(asin, quantity, amount, image, name)
                 var countItem = 0, TotalPrice = 0;
                 $.each(data.basket, function (key, item) {
                     dropdownCart.append('<li>' +
-                            '<span class="item">' +
-                            '<span class="item-left">' +
-                            '<img src="' + item.image + '" alt="" />' +
-                            '<span class="item-info">' +
-                            '<span>' + item.name + '</span>' +
-                            '<span>' + item.price / 100 + ' €</span>' +
-                            '<span>X ' + item.quantity + '</span>' +
-                            '</span>' +
-                            '</span>' +
-                            '<span class="item-right">' +
-                            '<button class="btn btn-xs btn-danger pull-right removeItem" data-asin="' + key + '">x</button>' +
-                            '</span>' +
-                            '</span>' +
-                            '</li>');
+                        '<span class="item">' +
+                        '<span class="item-left">' +
+                        '<img src="' + item.image + '" alt="" />' +
+                        '<span class="item-info">' +
+                        '<span>' + item.name + '</span>' +
+                        '<span>' + item.price / 100 + ' €</span>' +
+                        '<span>X ' + item.quantity + '</span>' +
+                        '</span>' +
+                        '</span>' +
+                        '<span class="item-right">' +
+                        '<button class="btn btn-xs btn-danger pull-right removeItem" data-asin="' + key + '">x</button>' +
+                        '</span>' +
+                        '</span>' +
+                        '</li>');
                     TotalPrice += (item.price / 100) * item.quantity;
                     countItem += parseInt(item.quantity);
                 });
                 $('.countArticles').html(countItem);
                 if (countItem > 0) {
                     dropdownCart.append('<li class="total text-center bg-info text-info text-uppercase">Total: ' + TotalPrice.toFixed(2) + ' €</li>' +
-                            '<li class="divider"></li>' +
-                            '<li><a class="text-center toAmazonCart" href="' + data.amazonCart.Cart.PurchaseURL + '">Voir le panier</a></li>');
+                        '<li class="divider"></li>' +
+                        '<li><a class="text-center toAmazonCart" href="' + data.amazonCart.Cart.PurchaseURL + '">Voir le panier</a></li>');
                 } else {
                     dropdownCart.parent('li').children('a').removeAttr('data-toggle');
                 }
@@ -150,28 +149,26 @@ $(document).ready(function () {
         });
     });
 
-    $('nav').affix({
-        offset: {
-            top: $('header').height()
-        }
-    });
+    /* $('nav').affix({
+            offset: {
+                top: $('header').height()
+            }
+        });*/
 
 });
 
-function slideProductDetails()
-{
+function slideProductDetails() {
     $('.thumbnail').hover(
         function () {
-                $(this).find('.caption').slideDown(250); //.fadeIn(250)
+            $(this).find('.caption').slideDown(250); //.fadeIn(250)
         },
         function () {
-                $(this).find('.caption').slideUp(250); //.fadeOut(205)
+            $(this).find('.caption').slideUp(250); //.fadeOut(205)
         }
     );
 }
 
-function call()
-{
+function call() {
     slideProductDetails();
 }
 
